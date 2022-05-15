@@ -1,0 +1,61 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+    <changeSet id="1" author="author@example.com" context="schema">
+        <sql>
+            -- скрипты создания таблиц
+            create table dict.term (
+                                         id bigserial not null,
+                                         language varchar(255) not null,
+                                         term varchar(255) not null,
+                                         constraint pk_term primary key (id)
+            );
+            create table dict.session (
+                                            session_id varchar(255) not null,
+                                            language varchar(255) not null,
+                                            term varchar(255) not null,
+                                            constraint pk_session primary key (session_id)
+            );
+        </sql>
+        <rollback>
+            -- скрипты удаления таблиц для отката
+            drop table dict.session;
+            drop table dict.term;
+        </rollback>
+    </changeSet>
+    <changeSet id="2" author="author@example.com" context="schema">
+        <sql>
+            create table dict.term_reference (
+                                                   id bigserial not null,
+                                                   term1_id bigint not null,
+                                                   term2_id bigint not null,
+                                                   constraint pk_term_reference primary key (id)
+            );
+        </sql>
+        <rollback>
+            drop table dict.term_reference;
+        </rollback>
+    </changeSet>
+    <changeSet id="3" author="author@example.com" context="data">
+        <sql>
+            insert into dict.term values (default, 'ENGLISH','peach');
+            insert into dict.term values (default, 'RUSSIAN','персик');
+            insert into dict.term_reference (term1_id, term2_id)
+            select t1.id, t2.id
+            from dict.term t1
+                     cross join dict.term t2
+            where t1.term = 'peach' and t2.term = 'персик'
+            ;
+            insert into dict.term_reference (term1_id, term2_id)
+            select t1.id, t2.id
+            from dict.term t1
+                     cross join dict.term t2
+            where t2.term = 'peach' and t1.term = 'персик'
+            ;
+        </sql>
+        <rollback>
+            delete from dict.term_reference;
+            delete from dict.term;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
