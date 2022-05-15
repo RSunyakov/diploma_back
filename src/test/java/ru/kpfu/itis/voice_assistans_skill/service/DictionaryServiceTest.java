@@ -1,3 +1,4 @@
+/*
 package ru.kpfu.itis.voice_assistans_skill.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -78,4 +79,4 @@ class DictionaryServiceTest {
         verify(sessionRepository).save(
                 new SessionEntity(sessionId, Language.RUSSIAN, "персик"));
     }
-}
+}*/

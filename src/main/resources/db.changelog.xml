@@ -4,32 +4,32 @@
     <changeSet id="1" author="author@example.com" context="schema">
         <sql>
             -- скрипты создания таблиц
-            create table dict.term (
-                                         id bigserial not null,
-                                         language varchar(255) not null,
-                                         term varchar(255) not null,
-                                         constraint pk_term primary key (id)
+            create table public.term (
+                                       id bigserial not null,
+                                       language varchar(255) not null,
+                                       term varchar(255) not null,
+                                       constraint pk_term primary key (id)
             );
-            create table dict.session (
-                                            session_id varchar(255) not null,
-                                            language varchar(255) not null,
-                                            term varchar(255) not null,
-                                            constraint pk_session primary key (session_id)
+            create table public.session (
+                                          session_id varchar(255) not null,
+                                          language varchar(255) not null,
+                                          term varchar(255) not null,
+                                          constraint pk_session primary key (session_id)
             );
         </sql>
         <rollback>
             -- скрипты удаления таблиц для отката
-            drop table dict.session;
-            drop table dict.term;
+            drop table public.session;
+            drop table public.term;
         </rollback>
     </changeSet>
     <changeSet id="2" author="author@example.com" context="schema">
         <sql>
-            create table dict.term_reference (
-                                                   id bigserial not null,
-                                                   term1_id bigint not null,
-                                                   term2_id bigint not null,
-                                                   constraint pk_term_reference primary key (id)
+            create table public.term_reference (
+                                                 id bigserial not null,
+                                                 term1_id bigint not null,
+                                                 term2_id bigint not null,
+                                                 constraint pk_term_reference primary key (id)
             );
         </sql>
         <rollback>
@@ -38,24 +38,24 @@
     </changeSet>
     <changeSet id="3" author="author@example.com" context="data">
         <sql>
-            insert into dict.term values (default, 'ENGLISH','peach');
-            insert into dict.term values (default, 'RUSSIAN','персик');
-            insert into dict.term_reference (term1_id, term2_id)
+            insert into public.term values (default, 'ENGLISH','peach');
+            insert into public.term values (default, 'RUSSIAN','персик');
+            insert into public.term_reference (term1_id, term2_id)
             select t1.id, t2.id
-            from dict.term t1
+            from public.term t1
                      cross join dict.term t2
             where t1.term = 'peach' and t2.term = 'персик'
             ;
-            insert into dict.term_reference (term1_id, term2_id)
+            insert into public.term_reference (term1_id, term2_id)
             select t1.id, t2.id
-            from dict.term t1
+            from public.term t1
                      cross join dict.term t2
             where t2.term = 'peach' and t1.term = 'персик'
             ;
         </sql>
         <rollback>
-            delete from dict.term_reference;
-            delete from dict.term;
+            delete from public.term_reference;
+            delete from public.term;
         </rollback>
     </changeSet>
 </databaseChangeLog>

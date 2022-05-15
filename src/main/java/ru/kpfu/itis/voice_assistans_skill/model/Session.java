@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import ru.kpfu.itis.voice_assistans_skill.entity.Language;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,15 +19,9 @@ public class Session {
     @Column(nullable = false)
     String sessionId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    Language language;
+    @OneToOne
+    Question currentQuestion;
 
-    @Column(nullable = false)
-    String term;
-
-    @Column(nullable = true)
-
-    @OneToMany(mappedBy = "session")
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Question> answeredQuestions;
 }

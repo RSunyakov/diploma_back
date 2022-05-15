@@ -11,6 +11,7 @@ import ru.kpfu.itis.voice_assistans_skill.dto.YASkillResponse;
 import ru.kpfu.itis.voice_assistans_skill.dto.YandexAliceRequest;
 import ru.kpfu.itis.voice_assistans_skill.dto.YandexAliceResponse;
 import ru.kpfu.itis.voice_assistans_skill.service.DictionaryService;
+import ru.kpfu.itis.voice_assistans_skill.service.QuestionService;
 
 @RestController
 @Slf4j
@@ -19,11 +20,11 @@ import ru.kpfu.itis.voice_assistans_skill.service.DictionaryService;
 public class DictionaryController {
 
 
-    private final DictionaryService dictionaryService;
+    private final QuestionService questionService;
 
     @PostMapping
     public @ResponseBody YandexAliceResponse talkYandexAlice(
             @RequestBody  YandexAliceRequest request) {
-        return dictionaryService.talkYandexAlice(request);
+        return questionService.talkVoiceAssistant(request);
     }
 }

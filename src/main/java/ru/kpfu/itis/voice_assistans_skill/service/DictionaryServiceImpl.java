@@ -1,3 +1,4 @@
+/*
 package ru.kpfu.itis.voice_assistans_skill.service;
 
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import ru.kpfu.itis.voice_assistans_skill.dto.YandexAliceResponse;
 import ru.kpfu.itis.voice_assistans_skill.entity.Language;
 import ru.kpfu.itis.voice_assistans_skill.entity.SessionEntity;
 import ru.kpfu.itis.voice_assistans_skill.entity.TermEntity;
+import ru.kpfu.itis.voice_assistans_skill.model.Session;
 import ru.kpfu.itis.voice_assistans_skill.repository.DictionaryRepository;
 import ru.kpfu.itis.voice_assistans_skill.repository.SessionRepository;
 
@@ -37,9 +39,9 @@ public class DictionaryServiceImpl implements DictionaryService {
         String sessionId = request.getSession().getSessionId();
         Objects.requireNonNull(sessionId);
 
-        Optional<SessionEntity> session = sessionRepository.findById(sessionId);
+        Optional<Session> session = sessionRepository.findById(sessionId);
         if (session.isPresent()) {
-            Optional<TermEntity> translation = dictionaryRepository.findTranslation(session.get().getLanguage().toString(), session.get().getTerm());
+                Optional<TermEntity> translation = dictionaryRepository.findTranslation(session.get().getLanguage().toString(), session.get().getTerm());
             if (translation.isPresent()) {
                 if (translation.get().getTerm().equalsIgnoreCase(request.getRequest().getCommand())) {
                     responseText = "Верно!";
@@ -62,3 +64,4 @@ public class DictionaryServiceImpl implements DictionaryService {
         return new YandexAliceResponse(new YASkillResponse(responseText));
     }
 }
+*/

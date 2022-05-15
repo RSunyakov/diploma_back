@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level =  AccessLevel.PRIVATE)
-@Entity(name = "session")
+@Entity(name = "session_old")
 public class SessionEntity {
     @Id
     @Column(nullable = false)
