@@ -1,36 +1,34 @@
 spring:
   profiles:
-    default: local #профиль Spring по умолчанию
-  datasource: #настройки соединения с СУБД по умолчанию
+    default: local
+  datasource:
     driverClassName: org.postgresql.Driver
-    url: ${SPRING_DATASOURCE_URL} #будут опеределяться через переменную окружения
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://rc1b-46tfuv14tfrye5c8.mdb.yandexcloud.net:6432/db1?&targetServerType=master&ssl=true&sslmode=verify-full
+    username: user1
+    password: SRr729030
   jpa:
-    show-sql: false #по умолчанию отключим показ SQL
-    hibernate.ddl-auto: validate #Hibernate будет только проверять схему
-    properties.hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
-  liquibase:
-    enabled: true #включён по умолчанию
-    contexts: schema, data #контексты по умолчанию
-    change-log: classpath:db.changelog.xml #путь к журналу изменений Liquibase
-    liquibaseSchema: liquibase #служебная схема СУБД для liquibase
-    default-schema: dict #схема СУБД для приложения
-    user: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
-    url: ${SPRING_DATASOURCE_URL}
+    hibernate:
+      ddl-auto: create
+
 ---
 spring:
-  config.activate.on-profile: test #расширение основных настроек для тестового профиля
+  config.activate.on-profile: test #?????????? ???????? ???????? ??? ????????? ??????? 
   jpa:
-    properties.hibernate.dialect: org.hibernate.dialect.H2Dialect #используем H2 для тестов
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect #?????????? H2 ??? ??????
   datasource:
-    driverClassName: org.h2.Driver
-    url: jdbc:h2:mem:domain1-db;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS LIQUIBASE\;CREATE SCHEMA IF NOT EXISTS DICT\;SET SCHEMA DICT;
-    username: sa
-    password:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://rc1b-46tfuv14tfrye5c8.mdb.yandexcloud.net:6432/db1?&targetServerType=master&ssl=true&sslmode=verify-full #????? ????????????? ????? ?????????? ?????????
+    username: user1
+    password: SRr729038
   liquibase:
-    user: sa
-    password:
+    user: user1
+    password: SRr729038
     contexts: schema

@@ -1,10 +1,9 @@
 package ru.kpfu.itis.voice_assistans_skill.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,28 +23,42 @@ public class Question {
     @Column(nullable = false)
     String question;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "answered_questions",
-            joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_id")
-    )
-    List<Session> sessions;
-
     @Column(nullable = false)
     String answer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "test_id")
+    Test test;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.TRUE)
+    @JoinTable(
+            name = "right_answered_questions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
+    List<User> rightUsers;
+
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.TRUE)
+            @JoinTable(
+                    name = "answered_questions",
+                    joinColumns = @JoinColumn(name = "user_id"),
+                    inverseJoinColumns = @JoinColumn(name = "question_id")
+            )
+    List<User> allUsers;
+
+    boolean isOpen;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
-        return Objects.equals(id, question.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Question)) {
+            return false;
+        }
+        Question question1 = (Question) obj;
+        return question1.getId().equals(getId());
     }
 }
