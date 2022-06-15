@@ -55,7 +55,7 @@ public class TestServiceImpl implements TestService {
         user.setScenario(scenario);
         userRepository.save(user);*/
         scenarioRepository.deleteAll();
-        return new Response("Для вас доступны следующие тесты: " + responseText + "чтобы запустить тестирование, произнестие \"Запусти тестирование название_теста\"");
+        return new Response("Для вас доступны следующие тесты: " + responseText + "чтобы запустить тестирование, произнесите Запусти тестирование название_теста ");
     }
 
     @Override

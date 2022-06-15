@@ -32,7 +32,7 @@ public class QuestionServiceImpl implements QuestionService {
             User user = userOptional.get();
             if (user.getCurrentQuestion() != null) {
                 Question currentQuestion = user.getCurrentQuestion();
-                if (currentQuestion.getAnswer().equals(request.getCommand()) || (currentQuestion.isOpen() && StringDistance.findSimilarity(request.getCommand(), currentQuestion.getAnswer()) >= 0.7)) {
+                if (currentQuestion.getAnswer().equals(request.getCommand()) || (currentQuestion.isOpen() && StringDistance.findSimilarity(request.getCommand(), currentQuestion.getAnswer()) >= 0.65)) {
                     responseText = "Верно!";
                     //Помечаем вопрос как верный и как отвеченный
                     List<Question> rightAnsweredQuestions = user.getRightAnsweredQuestions();
