@@ -44,6 +44,7 @@ public class VoiceAssistantController {
         String responseText = mappingService.mappingRequest(new Request(request.getSessionId(), request.getPayload().getMessage().getOriginalText().toLowerCase(Locale.ROOT), request.getUuid().getUserId(), request.getPayload().isNewSession())).getResponseText();
         List<Item> items = new ArrayList<>();
         items.add(new Item(new Bubble(responseText)));
+
         return new SmartAppResponse(request.getMessageId(), request.getSessionId(),
                 "ANSWER_TO_USER", new SAUserIdentifier(request.getUuid().getUserId(), request.getUuid().getSub(), request.getUuid().getUserChannel()),
                 new AnswerToUserResponse(request.getPayload().getDevice(), true, responseText, items));

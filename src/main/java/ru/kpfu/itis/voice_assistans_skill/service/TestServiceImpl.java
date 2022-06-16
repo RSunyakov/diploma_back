@@ -31,7 +31,7 @@ public class TestServiceImpl implements TestService {
     public Response getAvailableTests(Request request) {
         Optional<User> userOptional = userRepository.findById(request.getUserId());
         String responseText = "";
-        List<Test> availableTest = new ArrayList<>();
+          List<Test> availableTest = new ArrayList<>();
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             List<Test> tests = testRepository.findAll();
@@ -49,17 +49,7 @@ public class TestServiceImpl implements TestService {
         for (Test test : availableTest) {
             responseText = responseText.concat(" " + test.getName() + ", ");
         }
-       /* User user = userRepository.findById(request.getUserId()).get();
-        Scenario scenario = user.getScenario();
-        scenario.setName("");
-        user.setScenario(scenario);
-        userRepository.save(user);*/
         scenarioRepository.deleteAll();
         return new Response("Для вас доступны следующие тесты: " + responseText + "чтобы запустить тестирование, произнесите Запусти тестирование название_теста ");
-    }
-
-    @Override
-    public Response startTest(Request request) {
-        return null;
     }
 }

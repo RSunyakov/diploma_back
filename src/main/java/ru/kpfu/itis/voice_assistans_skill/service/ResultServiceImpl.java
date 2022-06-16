@@ -35,8 +35,6 @@ public class ResultServiceImpl implements ResultService {
             Collections.reverse(results);
             Set<Long> resultIds = new HashSet<>();
             for (Result result : results) {
-                System.out.println("results: " + results);
-                System.out.println("set: " + resultIds);
                 if (!resultIds.contains(result.getTest().getId())) {
                     resultsWithoutDuplicate.add(result);
                     resultIds.add(result.getTest().getId());
@@ -44,7 +42,6 @@ public class ResultServiceImpl implements ResultService {
             }
         }
         StringBuilder responseText = new StringBuilder("На данный момент вы прошли следующие тестирования: ");
-        System.out.println("ttt: " + resultsWithoutDuplicate);
         if (resultsWithoutDuplicate.isEmpty()) {
             return new Response("На данный момент у вас нет пройденных тестирований");
         }
@@ -53,11 +50,6 @@ public class ResultServiceImpl implements ResultService {
             responseText.append(" (оценка: ").append(result.getMark());
             responseText.append(", процент правильных ответов: ").append(result.getResult()*100).append("%) ");
         }
-        /*User user = userRepository.findById(request.getUserId()).get();
-        Scenario scenario = user.getScenario();
-        scenario.setName("");
-        user.setScenario(scenario);
-        userRepository.save(user);*/
         scenarioRepository.deleteAll();
         return new Response(responseText.toString());
     }

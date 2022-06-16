@@ -43,9 +43,6 @@ public class MappingServiceImpl implements MappingService {
         } else {
             if (waitingUserName) {
                 List<String> userName = Arrays.asList(request.getCommand().split(" "));
-               /* Scenario scenario = new Scenario(1L, "");
-                System.out.println("scenario: " + scenario);
-                scenarioRepository.save(scenario);*/
                 User user = new User(request.getUserId(), userName.get(0), userName.get(1), new ArrayList<>(), null, new ArrayList<>(), new ArrayList<>());
                 userRepository.save(user);
                 responseText = "Приятно познакомиться, " + request.getCommand() + " . ";
@@ -88,23 +85,14 @@ public class MappingServiceImpl implements MappingService {
                 User user = optionalUser.get();
                 switch (matchedValue) {
                     case Test:
-                        /*System.out.println("tut: ");
-                        user.setScenario(new Scenario(1L, Command.Test.name()));
-                        userRepository.save(user);
-                        System.out.println("just user: " + user);
-                        System.out.println("tttt: " + userRepository.findById(request.getUserId()).get());*/
                         scenarioRepository.save(new Scenario(1L, Command.Test.name()));
                         int commandIndex = request.getCommand().lastIndexOf(Command.Test.getCommand());
                         String testName = request.getCommand().substring(commandIndex + Command.Test.getCommand().length() + 1);
                         return questionService.checkTestAvailable(request, testName);
                     case List:
-                        /*user.setScenario(new Scenario(1L, Command.List.name()));
-                        userRepository.save(user);*/
                         scenarioRepository.save(new Scenario(1L, Command.List.name()));
                         return testService.getAvailableTests(request);
                     case Results:
-                        /*user.setScenario(new Scenario(1L, Command.Results.name()));
-                        userRepository.save(user);*/
                         scenarioRepository.save(new Scenario(1L, Command.Results.name()));
                         return resultService.getResult(request);
                     case Menu:
