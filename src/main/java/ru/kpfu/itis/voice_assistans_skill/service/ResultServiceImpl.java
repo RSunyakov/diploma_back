@@ -27,7 +27,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public Response getResult(Request request) {
-        Optional<User> userOptional = userRepository.findById(request.getUserId());
+        Optional<User> userOptional = userRepository.findById(request.getUserId() + request.getAdminId());
         List<Result> resultsWithoutDuplicate = new ArrayList<>();
         if (userOptional.isPresent()) {
             User user = userOptional.get();

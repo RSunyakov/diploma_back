@@ -22,29 +22,29 @@
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>morph</artifactId>
             <version>1.5</version>
-            <scope>system</scope>
-            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/morph/target/morph-1.5.jar</systemPath>
+            <!--<scope>system</scope>
+            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/morph/target/morph-1.5.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>dictionary-reader</artifactId>
             <version>1.5</version>
-            <scope>system</scope>
-            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/dictionary-reader/target/dictionary-reader-1.5.jar</systemPath>
+           <!-- <scope>system</scope>
+            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/dictionary-reader/target/dictionary-reader-1.5.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>english</artifactId>
             <version>1.5</version>
-            <scope>system</scope>
-            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/english/target/english-1.5.jar</systemPath>
+            <!--<scope>system</scope>
+            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/english/target/english-1.5.jar</systemPath>-->
         </dependency>
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>russian</artifactId>
             <version>1.5</version>
-            <scope>system</scope>
-            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/russian/target/russian-1.5.jar</systemPath>
+        <!--    <scope>system</scope>
+            <systemPath>/Users/romansunyakov/Work/Java Projects/russianmorphology/russianmorphology/russian/target/russian-1.5.jar</systemPath>-->
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.lucene/lucene-core -->
         <dependency>

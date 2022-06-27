@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.lang.Nullable;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class Request {
     @JsonProperty("original_utterance")
     String originalUtterance;
     String type;
-    Object payload;
+    /*@Nullable
+    Object payload;*/
     Nlu nlu;
 }

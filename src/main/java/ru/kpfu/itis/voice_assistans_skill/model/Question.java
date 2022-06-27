@@ -1,9 +1,12 @@
 package ru.kpfu.itis.voice_assistans_skill.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import ru.kpfu.itis.voice_assistans_skill.api.models.Admin;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,10 +17,11 @@ import java.util.Objects;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity(name = "question")
+@ToString(exclude = {"rightUsers", "allUsers", "test"})
 public class Question {
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     Long id;
 
     @Column(nullable = false)
@@ -28,6 +32,8 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
+    @JsonIgnore
+    //@JsonBackReference
     Test test;
 
     @ManyToMany
@@ -37,6 +43,7 @@ public class Question {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "question_id")
     )
+    @JsonIgnore
     List<User> rightUsers;
 
     @ManyToMany
@@ -46,6 +53,7 @@ public class Question {
                     joinColumns = @JoinColumn(name = "user_id"),
                     inverseJoinColumns = @JoinColumn(name = "question_id")
             )
+    @JsonIgnore
     List<User> allUsers;
 
     boolean isOpen;

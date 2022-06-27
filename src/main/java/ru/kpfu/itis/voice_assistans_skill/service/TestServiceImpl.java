@@ -29,7 +29,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Response getAvailableTests(Request request) {
-        Optional<User> userOptional = userRepository.findById(request.getUserId());
+        Optional<User> userOptional = userRepository.findById(request.getUserId() + request.getAdminId());
         String responseText = "";
           List<Test> availableTest = new ArrayList<>();
         if (userOptional.isPresent()) {

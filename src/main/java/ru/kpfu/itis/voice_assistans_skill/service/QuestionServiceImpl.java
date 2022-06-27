@@ -27,7 +27,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Response talkVoiceAssistant(Request request) {
         String responseText = "Привет! Тебе нужно ответить на несколько вопросов. ";
-        Optional<User> userOptional = userRepository.findById(request.getUserId());
+        Optional<User> userOptional = userRepository.findById(request.getUserId() + request.getAdminId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             if (user.getCurrentQuestion() != null) {
@@ -53,7 +53,7 @@ public class QuestionServiceImpl implements QuestionService {
                     if (actuallyQuestions.size() == 0) {
                         responseText += " Поздравляем! Вы ответили на все вопросы";
                         //Подсчитываю результаты
-                        User actuallyUser = userRepository.findById(request.getUserId()).get();
+                        User actuallyUser = userRepository.findById(request.getUserId() + request.getAdminId()).get();
                         int rightAnswerCount = actuallyUser.getRightAnsweredQuestions().size() - 1;
                         int questionCount = actuallyUser.getAnsweredQuestions().size() - 1;
                         double result = ((double) rightAnswerCount / ((double) questionCount));
@@ -88,7 +88,7 @@ public class QuestionServiceImpl implements QuestionService {
                     if (actuallyQuestions.size() == 0) {
                         responseText += " Поздравляем! Вы ответили на все вопросы";
                         //Подсчитываю результаты
-                        User actuallyUser = userRepository.findById(request.getUserId()).get();
+                        User actuallyUser = userRepository.findById(request.getUserId() + request.getAdminId()).get();
                         int rightAnswerCount = actuallyUser.getRightAnsweredQuestions().size() - 1;
                         int questionCount = actuallyUser.getAnsweredQuestions().size() - 1;
                         double result = ((double) rightAnswerCount / ((double) questionCount));
@@ -135,7 +135,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Response checkTestAvailable(Request request, String testName) {
-        Optional<User> userOptional = userRepository.findById(request.getUserId());
+        Optional<User> userOptional = userRepository.findById(request.getUserId() + request.getAdminId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             List<Test> tests = user.getTests();

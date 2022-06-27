@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TestRepository extends JpaRepository<Test, Long> {
     List<Test> findAllByName(String testName);
+
+    List<Test> findAllByAdminId(Long id);
 }

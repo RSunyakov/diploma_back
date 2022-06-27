@@ -22,6 +22,6 @@ public class Session {
     boolean isNew;
     @JsonProperty("message_id")
     int messageId;
-    User user;
+    //User user;
     Application application;
 }

@@ -3,11 +3,7 @@ package ru.kpfu.itis.voice_assistans_skill.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.voice_assistans_skill.dto.Request;
 import ru.kpfu.itis.voice_assistans_skill.dto.marusia.MarusiaRequest;
 import ru.kpfu.itis.voice_assistans_skill.dto.marusia.MarusiaResponse;
@@ -32,16 +28,18 @@ public class VoiceAssistantController {
 
     private final MappingService mappingService;
 
-    @PostMapping("/alice")
+    @PostMapping("/{id}/alice")
     public @ResponseBody YandexAliceResponse talkYandexAlice(
+            @PathVariable Long id,
             @RequestBody YandexAliceRequest request) {
-        return new YandexAliceResponse(new YASkillResponse(mappingService.mappingRequest(new Request(request.getSession().getSessionId(), request.getRequest().getCommand(), request.getSession().getUser().getUserId(), request.getSession().isNew())).getResponseText()));
+        return new YandexAliceResponse(new YASkillResponse(mappingService.mappingRequest(new Request(request.getSession().getSessionId(), request.getRequest().getCommand(), request.getSession().getUser().getUserId(), request.getSession().isNew(), id)).getResponseText()));
     }
 
-    @PostMapping("/sber")
+    @PostMapping("/{id}/sber")
     public @ResponseBody SmartAppResponse talkSmartApp(
+            @PathVariable Long id,
             @RequestBody SmartAppRequest request) {
-        String responseText = mappingService.mappingRequest(new Request(request.getSessionId(), request.getPayload().getMessage().getOriginalText().toLowerCase(Locale.ROOT), request.getUuid().getUserId(), request.getPayload().isNewSession())).getResponseText();
+        String responseText = mappingService.mappingRequest(new Request(request.getSessionId(), request.getPayload().getMessage().getOriginalText().toLowerCase(Locale.ROOT), request.getUuid().getUserId(), request.getPayload().isNewSession(), id)).getResponseText();
         List<Item> items = new ArrayList<>();
         items.add(new Item(new Bubble(responseText)));
 
@@ -50,10 +48,13 @@ public class VoiceAssistantController {
                 new AnswerToUserResponse(request.getPayload().getDevice(), true, responseText, items));
     }
 
-    @PostMapping("/marusia")
+    @PostMapping("/{id}/marusia")
     public @ResponseBody MarusiaResponse talkMarusia(
+            @PathVariable Long id,
             @RequestBody MarusiaRequest request) {
-        String responseText = mappingService.mappingRequest(new Request(request.getSession().getSessionId(), request.getRequest().getOriginalUtterance(), request.getSession().getUser().getUserId(), request.getSession().isNew())).getResponseText();
+        Request localRequest = new Request(request.getSession().getSessionId(), request.getRequest().getOriginalUtterance(), request.getSession().getUserId(), request.getSession().isNew(), id);
+        ru.kpfu.itis.voice_assistans_skill.dto.Response localResponse = mappingService.mappingRequest(localRequest);
+        String responseText = localResponse.getResponseText();
         return new MarusiaResponse(new Response(responseText, responseText, false), request.getSession(), request.getVersion());
     }
 }
